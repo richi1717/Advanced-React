@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Router from 'next/router';
 import { Mutation } from 'react-apollo';
 import Form from './styles/Form';
-import formatMoney from '../lib/formatMoney';
 import Error from './ErrorMessage';
 
 export const CREATE_ITEM_MUTATION = gql`
@@ -109,7 +108,7 @@ const CreateItem = props => {
                 placeholder="Price"
                 required
                 type="text"
-                value={formatMoney(price)}
+                value={price}
               />
             </label>
             <label htmlFor="description">

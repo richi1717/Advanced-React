@@ -8,7 +8,7 @@ import { perPage } from '../config';
 
 export const ALL_ITEMS_QUERY = gql`
   query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
-    items(first: $first, skip: $skip, orderBy: createdAt_DESC) {
+    items(first: $first, skip: $skip, orderBy: price_DESC) {
       id
       title
       price
@@ -37,7 +37,6 @@ const Items = props => {
       <Pagination page={props.page} />
       <Query
         query={ALL_ITEMS_QUERY}
-        // fetchPolicy="network-only"
         variables={{ skip: props.page * perPage - perPage, first: perPage }}
       >
         {({ data, error, loading }) => {
@@ -45,9 +44,8 @@ const Items = props => {
           if (error) return <p>Error: {error.message}</p>;
           return (
             <ItemsList>
-              {data.items.map(item => (
-                <Item key={item.id} item={item} />
-              ))}
+              {data.items &&
+                data.items.map(item => <Item key={item.id} item={item} />)}
             </ItemsList>
           );
         }}
